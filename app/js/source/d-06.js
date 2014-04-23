@@ -4,18 +4,28 @@
   $(document).ready(init);
 
   function init(){
-    $('#exp').click(makeArray);
+    $('#lastThree').click(makeArray);
   }
 
   function makeArray(){
-    var array = $('#input').val().split(',');
-    array.forEach(powDiv);
+    debugger;
+    var input = $('#input').val().split(',');
+    var array = [];
+    for(var i = (input[0] *1); i <= (input[1] *1); i++){
+      array.push(i);
+    }
+    return array;
   }
 
-  function powDiv(x){
-    var $div = $('<div>');
-    $div.text(Math.pow(x, 4)).addClass('div');
-    $('.answers').append($div);
-  }
+  // function
+  //
+  // function div(x){
+  //   var $div = $('<div>').append(x).addClass('div');
+  //   $('.answers').append($div);
+  // }
+  //
+  // function slice(x){
+  //   return
+  // }
 
 }());
