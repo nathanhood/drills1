@@ -8,24 +8,22 @@
   }
 
   function makeArray(){
-    debugger;
     var input = $('#input').val().split(',');
     var array = [];
     for(var i = (input[0] *1); i <= (input[1] *1); i++){
       array.push(i);
     }
-    return array;
+    output(array);
   }
 
-  // function
-  //
-  // function div(x){
-  //   var $div = $('<div>').append(x).addClass('div');
-  //   $('.answers').append($div);
-  // }
-  //
-  // function slice(x){
-  //   return
-  // }
+  function output(x){
+    debugger;
+    return x.slice(-3).map(div);
+  }
+
+  function div(x){
+    var $div = $('<div>').append(x).addClass('div');
+    $('.answers').append($div);
+  }
 
 }());
