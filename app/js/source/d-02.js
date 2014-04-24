@@ -8,17 +8,21 @@
   }
 
   function makeArray(){
-    var array = $('#input').val().split(',');
+    var array = $('#input').val().split(',').map(strip);
     array.forEach(makeDiv);
   }
 
-  function makeDiv(x){
+  function strip(word){
+    return word.trim();
+  }
+
+  function makeDiv(word){
     var $div = $('<div>');
-    if(x.length % 2){ //odd
-      $div.text(x.toUpperCase());
+    if(word.length % 2){ //odd
+      $div.text(word.toUpperCase());
       $div.css('background-color', 'red');
     } else {
-      $div.text(x.toLowerCase());
+      $div.text(word.toLowerCase());
       $div.css('background-color', 'green');
     }
     $('.block').append($div);
