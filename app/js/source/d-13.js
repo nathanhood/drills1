@@ -9,7 +9,7 @@
 
   function go(){
     var temp = $('#input').val().split(',').map(strip);
-    var final = pow(temp).forEach(append);
+    var final = pow(temp).map(div).forEach(append);
     console.log(final);
   }
 
@@ -20,19 +20,18 @@
   function pow(array){
     var powArray = [];
     for(var i = 0; i < array.length; i++){
-      var $div = $('<div>');
       if(i % 2){ //odd
-        powArray.push($div.text(Math.pow(array[i], 2)).addClass('blue'));
+        powArray.push(Math.pow(array[i], 2));
       }else{
-        powArray.push($div.text(Math.pow(array[i], 3)).addClass('red'));
+        powArray.push(Math.pow(array[i], 3));
       }
     }
     return powArray;
   }
 
-  // function div(num){
-  //   '<div class="result">' + num + '</div>';
-  // }
+  function div(num){
+    return '<div class="result">' + num + '</div>';
+  }
 
   // function backgroundColor(array){
   //   var powArray = [];
@@ -47,7 +46,7 @@
   // }
 
   function append(div){
-    return $('.main').append(div);
+    return $('.answers').append(div);
   }
 
 
