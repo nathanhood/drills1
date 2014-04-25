@@ -4,51 +4,49 @@
   $(document).ready(init);
 
   function init(){
-    $('#go').click(go);
+    $('#get').click(go);
   }
 
   function go(){
-    var temp = $('#input').val().split(',').map(strip);
-    var final = pow(temp).map(div).forEach(append);
-    console.log(final);
+    var temp = $('#input').val().split('-').map(strip);
+    var sums = temp[0].split('+').map(strip).filter(isOdd);
+    var prod = temp[1].split('*').map(strip).filter(isOdd);
+    sums = sum(sums);
+    prod = product(prod);
+    div(sums);
+    div(prod);
+}
+
+  function isOdd(num){
+    return num % 2 === 1;
   }
 
-  function strip(num){
-    return num.trim();
-  }
+  function sum(array){
+    var total = 0;
 
-  function pow(array){
-    var powArray = [];
     for(var i = 0; i < array.length; i++){
-      if(i % 2){ //odd
-        powArray.push(Math.pow(array[i], 2));
-      }else{
-        powArray.push(Math.pow(array[i], 3));
-      }
+      total += parseInt(array[i]);
     }
-    return powArray;
+    return total;
+  }
+
+  function product(array){
+    var total = 1;
+
+    for(var i = 0; i < array.length; i++){
+      total *= parseInt(array[i]);
+    }
+    return total;
+  }
+
+  function strip(string){
+    return string.trim();
   }
 
   function div(num){
-    return '<div class="result">' + num + '</div>';
+    var $div = $('<div class="container">' + num + '</div>');
+    $('body').append($div);
   }
-
-  // function backgroundColor(array){
-  //   var powArray = [];
-  //   for(var i = 0; i < array.length; i++){
-  //     if(i % 2){ //odd
-  //       powArray.push($('array[i]').css('background-color', 'blue'));
-  //     }else{
-  //       powArray.push($('array[i]').css('background-color', 'red'));
-  //     }
-  //   }
-  //   return powArray;
-  // }
-
-  function append(div){
-    return $('.answers').append(div);
-  }
-
 
 
 }());

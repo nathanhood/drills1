@@ -1,16 +1,16 @@
 (function(){
   'use strict';
 
-  var timer;
+  // var quotes = [];
 
   $(document).ready(init);
 
   function init(){
-    $('#get').click(split);
+    $('#get').click(buildArray);
   }
 
-  function split(){
-    $('#symbol').val().toUpperCase().split(',').map(strip).forEach(addQuote);
+  function buildArray(){
+    $('#symbol').val().toUpperCase().split(',').map(strip).map(addQuote);
   }
 
   function strip(word){
@@ -20,42 +20,30 @@
   function addQuote(symbol){
     // var symbol = $('#symbol').val().trim().toUpperCase(); //stock symbol. needs to be upper case. Input into url below.
     var url = 'http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol='+symbol+'&callback=?';
-    $.getJSON(url, getReport);//service/responding server calls function getReport once response comes back.
+    $.getJSON(url, getValues);//service/responding server calls function getReport once response comes back.
   }
 
-  function getReport(data){
-    var $tr = $('<tr class="symbol">');
-    $('tbody').append($tr);
-
-    $tr.append('<td>' + data.Symbol + '</td>');
-    $tr.append('<td id="' + data.Symbol + '">' + '$' + data.LastPrice + '</td>');
-    refreshRate();
+  function getValues(data){
+    debugger;
+    var temp = [];
+    $.each(data, function(){
+      temp.push(data.LastPrice);
+    });
+    sum(temp);
+    // quotes.push(data.LastPrice);
+    // setTimeout(function(){
+    //   sum(temp);
+    // }, 3000);
+    // clearTimeout();
   }
 
-  function refreshRate(){
-    clearInterval(timer);
-    timer = setInterval(function(){
-      repopulate();
-    }, 1000);
-  }
-
-  function repopulate(){
-    var array = $('td:nth-child(odd)');
-    var newArray = [];
-    for(var i = 1; i < array.length; i++){
-      newArray.push($(array[i]).text());
-    }
-    newArray.map(reQuote);
-  }
-
-  function reQuote(symbol){
-    var url = 'http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol='+symbol+'&callback=?';
-    $.getJSON(url, updateReport);
-  }
-
-  function updateReport(data){
-    var newPrice = $('#' + data.Symbol).text(data.LastPrice);
-    console.log(newPrice);
+  function sum(array){
+    var total = array.reduce(function(a, b){
+      return a + b;
+    });
+    var $div = $('<div class="container">').text('$' + total);
+    $('body').append($div);
+    console.log();
   }
 
 }());
