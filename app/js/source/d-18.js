@@ -10,7 +10,7 @@
   }
 
   function split(){
-    $('#symbol').val().toUpperCase().split(',').map(strip).forEach(addQuote);
+    $('#symbol').val().toUpperCase().split(',').map(strip).map(addQuote);
   }
 
   function strip(word){
@@ -54,7 +54,7 @@
   }
 
   function updateReport(data){
-    var newPrice = $('#' + data.Symbol).text(data.LastPrice);
+    var newPrice = $('#' + data.Symbol).text('$' + data.LastPrice);
     console.log(newPrice);
   }
 
