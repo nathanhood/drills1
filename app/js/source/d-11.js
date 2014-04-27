@@ -1,23 +1,69 @@
 (function(){
   'use strict';
 
+
   $(document).ready(randomPos);
   $(document).ready(init);
 
   function init(){
-    $('body').on('click', 'div', function(event){
-      event.stopPropagation();
-      $('div').removeClass('moveable');
-      $(this).addClass('moveable');
-    });
+    $('body').on('click', 'div', selectSquare);
     $('body').on('keydown', move);
   }
 
-  // function toggleMove(event){ //had to move inline (above) for 'stopProp' to work
-  //   event.stopPropagation();
-  //   $('div').removeClass('moveable');
-  //   $(this).addClass('moveable');
-  // }
+  function selectSquare(event){ //had to move inline (above) for 'stopProp' to work
+    event.stopPropagation();
+    $('div').removeClass('moveable');
+    $(this).addClass('moveable');
+  }
+
+  function move(event){
+    if(event >= 37 && event <= 40){
+      event.preventDefault();
+    }
+
+    var currentX = parseInt($('.moveable').css('left'));
+    var currentY = parseInt($('.moveable').css('top'));
+    var boundX = $('.moveable').parent().width() - $('.moveable').width();
+    var boundY = $('.moveable').parent().height() - $('.moveable').height();
+
+
+    switch(event.keyCode){
+    case 37:
+      if(currentX > 4){currentX -= 5;}
+      break;
+    case 38:
+      if(currentY > 4){currentY -= 5;}
+      break;
+    case 39:
+      if(currentX < boundX){currentX += 5;}
+      break;
+    case 40:
+      if(currentY < boundY){currentY += 5;}
+      break;
+    }
+
+    $('.moveable').css('left', currentX).css('top', currentY);
+
+  }
+
+
+  function randomPos(){
+    var ah = window.innerHeight;
+    var aw = window.innerWidth;
+    var bh = $('.big').height();
+    var bw = $('.big').width();
+    var ch = $('.small').height();
+    var cw = $('.small').width();
+
+    var bigX = Math.floor(Math.random() * (aw - bw));
+    var bigY = Math.floor(Math.random() * (ah - bh));
+    $('.big').css('left', bigX + 'px');
+    $('.big').css('top', bigY + 'px');
+    var smallX = Math.floor(Math.random() * (bw - cw));
+    var smallY = Math.floor(Math.random() * (bh - ch));
+    $('.small').css('left', smallX + 'px');
+    $('.small').css('top', smallY + 'px');
+  }
 
   // function divPosition(){
   //   var bigTop = parseInt($('.big').css('top'));
@@ -36,64 +82,6 @@
   //   }
   //
   // }
-
-  function move(event){
-    var $selected = $('div.moveable');
-
-    if(event >= 37 || event <= 40){
-      event.preventDefault();
-    }
-
-    switch(event.keyCode){
-    case 38:
-      $selected.css('top', '-=10');
-      break;
-    case 40:
-      $selected.css('top', '+=10');
-      break;
-    case 37:
-      $selected.css('left', '-=10');
-      break;
-    case 39:
-      $selected.css('left', '+=10');
-      break;
-    }
-  }
-
-  // function moveSmall(event){
-  //   var $selected = $('div.moveable');
-  //
-  //   if(event >= 37 || event <= 40){
-  //     event.preventDefault();
-  //   }
-  //
-  //   switch(event.keyCode){
-  //   case 38:
-  //     $selected.css('top', '-=10');
-  //     break;
-  //   case 40:
-  //     $selected.css('top', '+=10');
-  //     break;
-  //   case 37:
-  //     $selected.css('left', '-=10');
-  //     break;
-  //   case 39:
-  //     $selected.css('left', '+=10');
-  //     break;
-  //   }
-  // }
-
-
-  function randomPos(){
-    var bigLeft = Math.floor(Math.random() * 1044);
-    var bigTop = Math.floor(Math.random() * 400);
-    $('.big').css('left', bigLeft + 'px');
-    $('.big').css('top', bigTop + 'px');
-    var smallDim = Math.floor(Math.random() * 330);
-    $('.small').css('left', smallDim + 'px');
-    $('.small').css('top', smallDim + 'px');
-  }
-
 
 
 }());
